@@ -1,23 +1,26 @@
-const express=require('express')
-const mongoose=require("mongoose")
+const express=require('express');
 const cookieParser = require('cookie-parser');
-
+const authRoutes=require('./routes/authRoutes');
 const dotenv = require('dotenv')
+const connectDB=require('./db');
+
 dotenv.config();
 const app=express();
-
-
-mongoose.connect(process.env.dbURI, {useFindAndModify:true, useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) =>{
-      console.log('mongodb connected');
-      app.listen(process.env.PORT||5000,()=>console.log(5000));
-
-})
-  .catch((err) => console.log(err));
+connectDB();
 
 app.use(express.static('public'))
+app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(cookieParser());
+app.use(authRoutes);
 
-app.set('views','./views')
-app.set('view engine','ejs')
+
+app.use((req,res)=>{
+    res.status(404).json({
+        msg:'page not found'
+    })
+})
+
+app.listen(process.env.PORT, () => {
+    console.log(`App listening on port ${process.env.PORT}!`);
+  });
