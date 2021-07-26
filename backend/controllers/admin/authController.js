@@ -3,12 +3,14 @@ const bcrypt = require('bcrypt'); // encrypt password
 // Check validation for requests
 const { check, validationResult } = require('express-validator');
 const gravatar = require('gravatar'); // get user image by email
-const User= require('../models/User')
+const User= require('../../models/User')
 
 module.exports.validateUserRegister=[
     check('firstName', 'Name is required').not().isEmpty(),
     check('lastName', 'Name is required').not().isEmpty(),
     check('email', 'Please include a valid email').isEmail(),
+    check('username', 'please enter a username with 8 or more characters')
+    .isLength({min:8,}),
     check(
       'password',
       'Please enter a password with 6 or more characters'
@@ -41,13 +43,13 @@ module.exports.register_post= async(req,res)=>{
             errors: errors.array(),
         });
     }
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, username, email, password } = req.body;
     try{
         let user= await User.findOne({email});
         if(user){
             return res.status(400).json({
                 errors:[{
-                    msg: 'User already exists',
+                    msg: 'Admin already exists',
                 }],
             });
         }
@@ -56,7 +58,7 @@ module.exports.register_post= async(req,res)=>{
             r: 'pg', // Rate,
             d: 'mm',
         });
-        const username=Math.random.toString();
+        const role='admin';
         user = new User({
             firstName,
             lastName,
@@ -64,6 +66,7 @@ module.exports.register_post= async(req,res)=>{
             email,
             password,
             avatar,
+            role,
         });
 
         const salt = await bcrypt.genSalt(10); // generate salt contains 10
@@ -110,7 +113,7 @@ module.exports.login_post= async(req,res)=>{
         // Know user founded by email let's compare passwords
         const isMatch= await bcrypt.compare(password,user.password);
         // passwords don't match
-        if(!isMatch){
+        if(!isMatch && user.role=='admin'){
             return res.status(400).json({
                 errors: [{
                   msg: 'Invalid credentials'

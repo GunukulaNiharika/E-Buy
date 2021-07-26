@@ -1,34 +1,57 @@
 const mongoose= require('mongoose');
+const bcrypt= require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true, // Unique email for each user
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    avatar: {
-      // User Image
-      type: String,
-    },
-    role: {
-      // Role of user it will be (normal or admin )
-      type: Number,
-      default: 0,
-    },
-    history: {
-      // order history
-      type: Array,
-      default: [],
-    },
-  });
-  
-  module.exports = User = mongoose.model('User', UserSchema )
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+    min: 3,
+    max: 20,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+    min: 3,
+    max: 20,
+  },
+  username: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    index: true,
+    lowercase: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: true,
+    lowercase: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  avatar: {
+    // User Image
+    type: String,
+  },
+  role: {
+    type: String,
+    enum: ["user", "admin", "super-admin"],
+    default: "user",
+  },
+  contactNumber: { type: String },
+  pofilePicture: { type: String },
+},
+{ timestamps: true }
+);
+
+UserSchema.virtual("fullName").get(function () {
+  return `${this.firstName} ${this.lastName}`;
+});
+module.exports = mongoose.model("User", UserSchema);
   
