@@ -1,7 +1,11 @@
 const express=require('express');
 const cookieParser = require('cookie-parser');
+
+
 const authRoutes=require('./routes/authRoutes');
 const adminRoutes=require('./routes/admin/authRoutes');
+const categoryRoutes=require('./routes/categoryRoutes');
+
 const dotenv = require('dotenv')
 const connectDB=require('./db');
 
@@ -13,8 +17,11 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(cookieParser());
+
+
 app.use('/api',authRoutes);
 app.use('/api',adminRoutes);
+app.use('/api',categoryRoutes);
 
 
 app.use((req,res)=>{

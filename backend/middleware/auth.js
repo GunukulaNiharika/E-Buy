@@ -1,13 +1,13 @@
 const jwt = require('jsonwebtoken')
 
-module.exports = function (req, res, next) {
+module.exports.requireSignIn = function (req, res, next) {
     // Get token from header 
     const token = req.header('x-auth-token');
 
     // Check if no token
     if (!token) {
         return res.status(401).json({
-            msg: 'No token, auth denied'
+            message: 'No token, auth denied'
         })
     }
 
@@ -19,7 +19,23 @@ module.exports = function (req, res, next) {
         next()
     } catch (error) {
         req.status(401).json({
-            msg: 'Token is not valid'
+            message: 'Token is not valid'
         })
     }
 }
+
+exports.userMiddleware = (req, res, next) => {
+    if (req.user.role !== "user") {
+      return res.status(400).json({ message: "User access denied" });
+    }
+    next();
+  };
+  
+  exports.adminMiddleware = (req, res, next) => {
+    if (req.user.role !== "admin") {
+    //   if (req.user.role !== "super-admin") {
+        return res.status(400).json({ message: "Admin access denied" });
+    //   }
+    }
+    next();
+  };
