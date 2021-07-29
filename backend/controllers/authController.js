@@ -16,7 +16,7 @@ exports.checkUser= async (req,res)=> {
 }
 
 module.exports.register_post= async(req,res)=>{
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, username, email, password } = req.body;
     try{
         let user= await User.findOne({email});
         if(user){
@@ -31,7 +31,6 @@ module.exports.register_post= async(req,res)=>{
             r: 'pg', // Rate,
             d: 'mm',
         });
-        const username=Math.random.toString();
         user = new User({
             firstName,
             lastName,
@@ -50,6 +49,7 @@ module.exports.register_post= async(req,res)=>{
         const payload = {
             user: {
                 id: user.id,
+                role: user.role,
             },
         };
 
@@ -87,7 +87,8 @@ module.exports.login_post= async(req,res)=>{
         }
         const payload = {
             user: {
-              id: user.id
+              id: user.id,
+              role: user.role,
             }
         }
         jwt.sign( payload, process.env.jwt_secret,{ expiresIn: 360000,},(err,token)=>{

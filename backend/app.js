@@ -6,6 +6,8 @@ const authRoutes=require('./routes/authRoutes');
 const adminRoutes=require('./routes/admin/authRoutes');
 const categoryRoutes=require('./routes/categoryRoutes');
 const productRoutes=require('./routes/productRoutes');
+const cartRoutes=require('./routes/cartRoutes');
+
 
 
 const dotenv = require('dotenv')
@@ -25,6 +27,7 @@ app.use('/api',authRoutes);
 app.use('/api',adminRoutes);
 app.use('/api',categoryRoutes);
 app.use('/api',productRoutes);
+app.use('/api',cartRoutes);
 
 
 
