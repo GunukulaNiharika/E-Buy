@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const authRoutes=require('./routes/authRoutes');
 const adminRoutes=require('./routes/admin/authRoutes');
 const categoryRoutes=require('./routes/categoryRoutes');
+const productRoutes=require('./routes/productRoutes');
+
 
 const dotenv = require('dotenv')
 const connectDB=require('./db');
@@ -22,6 +24,8 @@ app.use(cookieParser());
 app.use('/api',authRoutes);
 app.use('/api',adminRoutes);
 app.use('/api',categoryRoutes);
+app.use('/api',productRoutes);
+
 
 
 app.use((req,res)=>{
