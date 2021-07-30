@@ -3,6 +3,7 @@ const slugify = require("slugify");
 
 module.exports.addCategory_post= async(req,res)=>{
     const { name, parentId} =req.body;
+    
     try{
         const slug=slugify(name);
         const cat= new Category({
@@ -10,6 +11,9 @@ module.exports.addCategory_post= async(req,res)=>{
             slug,
             parentId,
         });
+        if(req.file){
+            cat.categoryImage=process.env.API+'/public/'+ req.file.filename;;
+        }
         await cat.save();
         res.status(201).json({cat});
     }

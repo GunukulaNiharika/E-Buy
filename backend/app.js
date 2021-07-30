@@ -17,7 +17,7 @@ dotenv.config();
 const app=express();
 connectDB();
 
-app.use(express.static('public'))
+app.use('/public',express.static('uploads'))
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(cookieParser());

@@ -10,25 +10,29 @@ module.exports.addItemToCart=  (req,res) =>{
             if(cart){
                 const product=req.body.cartItems.product;
                 const item =await cart.cartItems.find(c=>c.product== product);
+                let condition,update;
                 if(item){
-                    await Cart.findOneAndUpdate({"user": req.user.id, "cartItems.product":product},{
+                    condition ={"user": req.user.id, "cartItems.product":product};
+                    update={
                         "$set":{
-                            "cartItems": {
-                            ...req.body.cartItems,
+                            "cartItems.$": {
+                                ...req.body.cartItems,
                             quantity:item.quantity+req.body.cartItems.quantity
                             }
                         }
-                    });
-                    res.status(201).json({cart});
+                    };
                 }
                 else{
-                    await Cart.findOneAndUpdate({user: req.user.id},{
+                    condition ={user: req.user.id};
+                    update={
                         "$push":{
                             "cartItems": req.body.cartItems
                         }
-                    });
-                    res.status(201).json({cart});
+                    };
+                   
                 }
+                await Cart.findOneAndUpdate(condition,update);
+                res.status(201).json({cart});
             }
             else{
                 const cart= new Cart({
