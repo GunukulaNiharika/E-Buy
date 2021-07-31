@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card,  Button } from 'react-bootstrap';
+import { Card, Col, Row,  Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import FromInput from '../UI/FormInput';
 /**
@@ -13,7 +13,31 @@ const Register = (props) => {
       <Card className="card"style={{ width: '25rem' }}>
         <Card.Header className="card-header" >Login</Card.Header>
         <Card.Body>
-          <Form >
+        <Form >
+              <Row>
+                <Col md={6}>
+                  <FromInput
+                    placeholder="First Name"
+                    value=""
+                    type="text"
+                    onChange={()=>{}}
+                  />
+                </Col>
+                <Col md={6}>
+                  <FromInput
+                    placeholder="Last Name"
+                    value=""
+                    type="text"
+                    onChange={()=>{}}
+                  />
+                </Col>
+              </Row>
+              <FromInput
+                placeholder="Username"
+                value=""
+                type="username"
+                onChange={()=>{}}
+              />
               <FromInput
                 placeholder="Email"
                 value=""
