@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { Form } from 'react-bootstrap';
 import { Card,  Button } from 'react-bootstrap';
 import FromInput from '../UI/FormInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { IsUserLoggedIn, loginRequest } from '../actions/auth_actions';
+import { login } from '../actions/auth_actions';
 import { Redirect } from 'react-router-dom';
 /**
 * @author
@@ -22,18 +22,13 @@ const Login = (props) => {
   const auth=useSelector(state=>state.auth);
 
   const dispatch = useDispatch();
-  
-  useEffect(()=>{
-    if(!auth.authenticate){
-      dispatch(IsUserLoggedIn())
-    }
-  },[])
+
   const handleLogin=(e)=>{
     e.preventDefault();
     const user={
       email,password
     }
-    dispatch(loginRequest(user));
+    dispatch(login(user));
   }
   if(auth.authenticate){
     return <Redirect to="/" />

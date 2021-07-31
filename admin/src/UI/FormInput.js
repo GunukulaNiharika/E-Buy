@@ -7,7 +7,7 @@ import { Form } from 'react-bootstrap';
 
 const FromInput = (props) => {
   return(
-    <Form.Group controlId="form">
+    <Form.Group >
         <Form.Control type={props.type} placeholder={props.placeholder}
             value={props.vale} onChange={props.onChange}></Form.Control>
         <Form.Text className="text-muted">{props.errorMessage}</Form.Text>

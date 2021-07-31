@@ -5,7 +5,7 @@ function Header() {
     return (
         <>
             <Navbar collapseOnSelect expand="md" bg="dark" variant="dark">
-                <Container>
+                <Container fluid>
                     <Navbar.Brand href="/">Admin Dashboard</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">

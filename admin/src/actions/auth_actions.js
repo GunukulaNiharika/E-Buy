@@ -1,7 +1,7 @@
 import axiosInstance from "../helpers/axios"
 import { authConstants } from "./actionTypes";
 
-export const loginRequest=(user)=> async(dispatch) => {
+export const login=(user)=> async(dispatch) => {
     dispatch({type:authConstants.LOGIN_REQUEST});
     const res =await axiosInstance.post(`admin/login`,{
        ...user
@@ -49,4 +49,14 @@ export const IsUserLoggedIn =() =>{
             });
         }
     }
+}
+
+export const signout = () =>{
+    return async dispatch =>{
+    localStorage.clear();
+    dispatch({
+        type:authConstants.LOGOUT_REQUEST,
+    })
+    }
+
 }

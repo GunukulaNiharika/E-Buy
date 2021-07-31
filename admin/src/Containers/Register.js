@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card, Col, Row,  Button } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { register } from '../actions/user_actions';
+import  { Loading } from '../Components/LoadingComponent';    
 import FromInput from '../UI/FormInput';
 /**
 * @author
@@ -8,48 +12,77 @@ import FromInput from '../UI/FormInput';
 **/
 
 const Register = (props) => {
+  const auth=useSelector(state=>state.auth);
+  const user=useSelector(state=>state.user);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); 
+  const dispatch = useDispatch();
+
+  const handleRegister=(e)=>{
+    e.preventDefault();
+    const user ={
+      firstName, lastName, username, email, password
+    }
+    dispatch(register(user));
+  }
+
+  if(auth.authenticate){
+    return <Redirect to="/" />
+  }
+  if(user.registered){
+    return <Redirect to="/login" />
+  }
+  if(user.loading){
+    <Loading />
+  }
+
+
   return(
     <div className="card-center">
       <Card className="card"style={{ width: '25rem' }}>
         <Card.Header className="card-header" >Login</Card.Header>
         <Card.Body>
-        <Form >
+        <Form onSubmit={handleRegister}>
               <Row>
                 <Col md={6}>
                   <FromInput
                     placeholder="First Name"
-                    value=""
+                    value={firstName}
                     type="text"
-                    onChange={()=>{}}
+                    onChange={(e)=>setFirstName(e.target.value)}
                   />
                 </Col>
                 <Col md={6}>
                   <FromInput
                     placeholder="Last Name"
-                    value=""
+                    value={lastName}
                     type="text"
-                    onChange={()=>{}}
+                    onChange={(e)=>setLastName(e.target.value)}
                   />
                 </Col>
               </Row>
               <FromInput
                 placeholder="Username"
-                value=""
+                value={username}
                 type="username"
-                onChange={()=>{}}
+                onChange={(e)=>setUserName(e.target.value)}
               />
               <FromInput
                 placeholder="Email"
-                value=""
+                value={email}
                 type="email"
-                onChange={()=>{}}
+                onChange={(e)=>setEmail(e.target.value)}
               />
 
               <FromInput
                 placeholder="Password"
-                value=""
+                value={password}
                 type="password"
-                onChange={()=>{}}
+                onChange={(e)=>setPassword(e.target.value)}
               />
               <Button variant="primary" type="submit">
                 Submit
