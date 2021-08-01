@@ -71,7 +71,7 @@ module.exports.login_post= async(req,res)=>{
         if(!user){
             return res.status(400).json({
                 errors:[{
-                    msg: 'Invalid credentials',
+                    message: 'Invalid credentials',
                 }],
             });
         }
@@ -95,6 +95,7 @@ module.exports.login_post= async(req,res)=>{
         jwt.sign( payload, process.env.jwt_secret,{ expiresIn: 360000,},(err,token)=>{
             if(err) throw err;
             const { _id, firstName, lastName, username, email, avatar, fullName }=user;
+            res.cookie('token',token,{expiresIn: 360000});
             res.status(200).json({
                 token,
                  user: { _id, firstName, lastName, username, email, avatar, fullName }
@@ -106,4 +107,16 @@ module.exports.login_post= async(req,res)=>{
         res.status(400).send('Server error');
     }
 
+}
+
+module.exports.logout_post =(req,res) => {
+    try{
+    res.clearCookie('token');
+    res.status(200).json({
+        message: "signed Out successfully...!"
+    });
+}catch(error){
+    res.status(400).json({error})
+        
+    }
 }
