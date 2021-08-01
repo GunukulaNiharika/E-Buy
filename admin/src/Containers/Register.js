@@ -6,6 +6,8 @@ import { Redirect } from 'react-router-dom';
 import { register } from '../actions/user_actions';
 import  { Loading } from '../Components/LoadingComponent';    
 import FromInput from '../UI/FormInput';
+import Background from '../images/login_bg.jpeg';
+import {useWindowDimensions} from '../shared/Dimensions';
 /**
 * @author
 * @function Register
@@ -21,6 +23,8 @@ const Register = (props) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); 
   const dispatch = useDispatch();
+  const {height, width}= useWindowDimensions();
+
 
   const handleRegister=(e)=>{
     e.preventDefault();
@@ -40,56 +44,60 @@ const Register = (props) => {
     <Loading />
   }
 
-
+ 
   return(
-    <div className="card-center">
-      <Card className="card"style={{ width: '25rem' }}>
-        <Card.Header className="card-header" >Login</Card.Header>
-        <Card.Body>
-        <Form onSubmit={handleRegister}>
-              <Row>
-                <Col md={6}>
-                  <FromInput
-                    placeholder="First Name"
-                    value={firstName}
-                    type="text"
-                    onChange={(e)=>setFirstName(e.target.value)}
-                  />
-                </Col>
-                <Col md={6}>
-                  <FromInput
-                    placeholder="Last Name"
-                    value={lastName}
-                    type="text"
-                    onChange={(e)=>setLastName(e.target.value)}
-                  />
-                </Col>
-              </Row>
-              <FromInput
-                placeholder="Username"
-                value={username}
-                type="username"
-                onChange={(e)=>setUserName(e.target.value)}
-              />
-              <FromInput
-                placeholder="Email"
-                value={email}
-                type="email"
-                onChange={(e)=>setEmail(e.target.value)}
-              />
+    <div style = {{  backgroundImage: `url(${ Background })`,
+    backgroundSize: 'cover', position: 'fixed',margin:'0px', 
+    width: '100%', height:`${height}px`, zIndex:'0' }}>
+      <div className="card-center">
+        <Card className="card"style={{ width: '25rem' }}>
+          <Card.Header className="card-header" >Login</Card.Header>
+          <Card.Body>
+          <Form onSubmit={handleRegister}>
+                <Row>
+                  <Col md={6}>
+                    <FromInput
+                      placeholder="First Name"
+                      value={firstName}
+                      type="text"
+                      onChange={(e)=>setFirstName(e.target.value)}
+                    />
+                  </Col>
+                  <Col md={6}>
+                    <FromInput
+                      placeholder="Last Name"
+                      value={lastName}
+                      type="text"
+                      onChange={(e)=>setLastName(e.target.value)}
+                    />
+                  </Col>
+                </Row>
+                <FromInput
+                  placeholder="Username"
+                  value={username}
+                  type="username"
+                  onChange={(e)=>setUserName(e.target.value)}
+                />
+                <FromInput
+                  placeholder="Email"
+                  value={email}
+                  type="email"
+                  onChange={(e)=>setEmail(e.target.value)}
+                />
 
-              <FromInput
-                placeholder="Password"
-                value={password}
-                type="password"
-                onChange={(e)=>setPassword(e.target.value)}
-              />
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+                <FromInput
+                  placeholder="Password"
+                  value={password}
+                  type="password"
+                  onChange={(e)=>setPassword(e.target.value)}
+                />
+                <Button variant="primary" type="submit">
+                  Submit
+                </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
     </div>
    )
 

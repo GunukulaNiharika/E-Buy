@@ -17,12 +17,13 @@ function Main(){
           dispatch(IsUserLoggedIn())
         }
     },[])
+      
     return(
         <>
             <Header/>
             <Switch>
                 <PrivateRoute path="/" exact component={Home}/>
-                <Route path="/login" component={Login} />
+                <Route path="/login" component={Login}/>
                 <Route path="/register" component={Register}/>
             </Switch>
         </>

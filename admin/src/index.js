@@ -12,9 +12,9 @@ import configureStore from './store/configureStore'
 window.store=configureStore;
 ReactDOM.render(
   <Provider store={configureStore}>
-    <React.StrictMode>
+    <React.Fragment>
     <App />
-  </React.StrictMode>
+  </React.Fragment>
   </Provider>,
   
   document.getElementById('root')
