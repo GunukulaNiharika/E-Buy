@@ -9,11 +9,11 @@ const User= require('../../models/User')
 module.exports.checkUser= async (req,res)=> {
     try{
         const user=await User.findById(req.user.id).select('-password')
-        res.json(user)
+        res.status(200).json(user)
     }
     catch(error){
         console.log(error.message);
-        res.status(500).send('Server error');
+        res.status(400).send('Server error');
     }
 }
 
@@ -24,7 +24,7 @@ module.exports.register_post= async(req,res)=>{
         if(user){
             return res.status(400).json({
                 errors:[{
-                    msg: 'Admin already exists',
+                    message: 'Admin already exists',
                 }],
             });
         }
@@ -56,20 +56,16 @@ module.exports.register_post= async(req,res)=>{
                 role: user.role,
             },
         };
-
-        jwt.sign( payload, process.env.jwt_secret,{ expiresIn: 360000,},(err,token)=>{
-            if(err) throw err;
-            res.json({token});
-        });
+        res.status(201).json({message: "Admin created Successfully..!",});
     }
     catch(error){
         console.log(error.message);
-        res.status(500).send('Server error');
+        res.status(400).send('Server error');
     }
 }
 
 module.exports.login_post= async(req,res)=>{
-    const { email,password } = req.body;
+    const { email ,password } = req.body;
     try{
         let user= await User.findOne({email});
         if(!user){
@@ -85,7 +81,7 @@ module.exports.login_post= async(req,res)=>{
         if(!isMatch && user.role=='admin'){
             return res.status(400).json({
                 errors: [{
-                  msg: 'Invalid credentials'
+                  message: 'Invalid credentials'
                 }]
               })
         }
@@ -95,14 +91,19 @@ module.exports.login_post= async(req,res)=>{
               role: user.role,
             }
         }
+        // 
         jwt.sign( payload, process.env.jwt_secret,{ expiresIn: 360000,},(err,token)=>{
             if(err) throw err;
-            res.json({token});
+            const { _id, firstName, lastName, username, email, avatar, fullName }=user;
+            res.status(200).json({
+                token,
+                 user: { _id, firstName, lastName, username, email, avatar, fullName }
+            });
         });
     }
     catch(error){
-        console.log(err.message);
-        res.status(500).send('Server error');
+        console.log(error.message);
+        res.status(400).send('Server error');
     }
 
 }

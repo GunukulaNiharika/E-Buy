@@ -7,6 +7,7 @@ const adminRoutes=require('./routes/admin/authRoutes');
 const categoryRoutes=require('./routes/categoryRoutes');
 const productRoutes=require('./routes/productRoutes');
 const cartRoutes=require('./routes/cartRoutes');
+const cors=require('cors');
 
 
 
@@ -17,6 +18,7 @@ dotenv.config();
 const app=express();
 connectDB();
 
+app.use(cors());
 app.use('/public',express.static('uploads'))
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
