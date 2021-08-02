@@ -3,9 +3,12 @@ import Layout from '../../Components/Layout/layout'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from "react";
 import { get_categories, addCategory } from '../../actions/category_actions';
-import { Row, Col, Button, Modal } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import './category.css'
 import {BiAddToQueue} from 'react-icons/bi';
+import NewModal from '../../UI/Modal/Modal';
+import FromInput from '../../UI/FormInput';
+
 // import {
 //   IoIosCheckboxOutline,
 //   IoIosCheckbox,
@@ -33,7 +36,9 @@ const handleClose = () => {
   if(parentCategoryId!="")
   form.append('parentId',parentCategoryId);
   form.append('categoryImage',categoryImage);
-  dispatch(addCategory(form))
+  dispatch(addCategory(form));
+  setCategoryImage('');
+  setCategoryName('');
   // const cat={
   //   categoryName,
   //   parentCategoryId,
@@ -57,7 +62,7 @@ const dispatch = useDispatch();
         <li key={category._id}>
           {category.name}
           {category.children.length>0?
-            <ul style={{ listStyleType:'none'}}>
+            <ul >
               {renderCategories(category.children)}
             </ul>
             : null
@@ -93,20 +98,10 @@ const handleCategoryImage=(e)=>{
           {renderCategories(category.categories)}
         </ul>
       </Row>
-      <Modal
-      show={show} onHide={handleClose} animation={false}
-      size="md"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered>
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          ADD CATEGORY
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
+      <NewModal size={"md"} show={show} handleClose={handleClose} Title={"ADD CATEGORY"}>
       <Row>
         <Col className="mt-2 col-12" >
-            <input
+            <FromInput
                 value={categoryName}
                 placeholder={`Category Name`}
                 onChange={(e) => setCategoryName(e.target.value)}
@@ -128,14 +123,10 @@ const handleCategoryImage=(e)=>{
       </Row>
       <Row>
           <Col className="mt-2 col-12">
-              <input type="file" name="categoryImage" onChange={handleCategoryImage} />
+              <FromInput type="file" name="categoryImage" onChange={handleCategoryImage} />
           </Col>
       </Row>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button className="btn btn-sm btn-dark" onClick={handleClose}>ADD</Button>
-      </Modal.Footer>
-    </Modal>
+      </NewModal>
       
     </Layout>
    )

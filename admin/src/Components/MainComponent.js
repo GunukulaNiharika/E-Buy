@@ -2,13 +2,14 @@ import { Switch, Route, withRouter} from 'react-router-dom';
 import Home from '../Containers/Home';
 import Login from '../Containers/Login';
 import Register from '../Containers/Register';
-import Product from '../Containers/Products';
+import Product from '../Containers/Product/Products';
 import Category from '../Containers/Category/Categories';
 import Orders from '../Containers/Orders';
 import PrivateRoute from "./privateRoute";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { IsUserLoggedIn } from "../actions/auth_actions";
+import { getInitialData } from '../actions/initialData_actions';
 
 function Main(){
     const dispatch =useDispatch();
@@ -16,8 +17,9 @@ function Main(){
 
     useEffect(()=>{
         if(!auth.authenticate){
-          dispatch(IsUserLoggedIn())
+          dispatch(IsUserLoggedIn());
         }
+        dispatch(getInitialData());
     },[])
       
     return(

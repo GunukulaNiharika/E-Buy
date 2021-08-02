@@ -3,7 +3,6 @@ import {NavLink} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../actions/auth_actions';
 import { FaBars} from 'react-icons/fa'
-import { useState } from 'react';
 
 
 function Header(props) {
@@ -39,7 +38,7 @@ const dispatch= useDispatch();
     }
     return (
         <div style={{height:"50px"}}>
-            <Navbar style={{ zIndex:2}} collapseOnSelect expand="md" bg="dark" variant="dark" >
+            <Navbar style={{ zIndex:2}} fixed="top" collapseOnSelect expand="md" bg="dark" variant="dark" >
                 <Container fluid>
                     <Nav className="mr-auto">
                         <span onClick={ToggleSideBar} className="nav-link"><FaBars/></span>
