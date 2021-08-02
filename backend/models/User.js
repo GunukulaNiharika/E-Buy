@@ -49,7 +49,14 @@ const UserSchema = new mongoose.Schema({
 },
 { timestamps: true }
 );
-
+// UserSchema.pre('save', async function(next) {
+//   if(!this.isModified("password")){
+//     return next;
+//   }
+//   const salt = await bcrypt.genSalt();
+//   this.password = await bcrypt.hash(this.password, salt);
+//   next();
+// });
 UserSchema.virtual("fullName").get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
