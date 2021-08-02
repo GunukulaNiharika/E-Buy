@@ -1,5 +1,5 @@
 import axiosInstance from "../helpers/axios"
-import { authConstants, userContants } from "./actionTypes";
+import {  userContants } from "./actionTypes";
 
 export const register=(user)=> async(dispatch) => {
     dispatch({type:userContants.USER_REGISTER_REQUEST});

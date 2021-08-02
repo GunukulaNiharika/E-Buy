@@ -1,11 +1,4 @@
 
-.jumbotron {
-    padding:70px 30px 70px 30px;
-    margin:0px auto;
-    background: #ffffff ;
-    color:black;
-    font-size: 2rem;
-}
 
 .card-center{
     display: flex;
@@ -22,14 +15,6 @@
     color: #ffffff;
     text-align: center;
 }
-/* .login::before{
-    background: rgba(0,0,0,0.71);
-    position:absolute;
-    z-index: -1;
-    top: 0;
-    left:0;
-    content: "";
 
-} */
 
  

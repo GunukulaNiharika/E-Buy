@@ -48,7 +48,7 @@ const Register = (props) => {
   return(
     <div style = {{  backgroundImage: `url(${ Background })`,
     backgroundSize: 'cover', position: 'fixed',margin:'0px', 
-    width: '100%', height:`${height}px`, zIndex:'0' }}>
+    width: '100%', height:`${height}px`, zIndex:'-1' }}>
       <div className="card-center">
         <Card className="card"style={{ width: '25rem' }}>
           <Card.Header className="card-header" >Login</Card.Header>

@@ -2,9 +2,18 @@ import { Navbar, Nav, Container } from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signout } from '../actions/auth_actions';
+import { FaBars} from 'react-icons/fa'
+import { useState } from 'react';
 
 
-function Header() {
+function Header(props) {
+
+
+const sidebarOpen=props.value;
+const ToggleSideBar=()=>{
+    props.onChange(!sidebarOpen);
+}
+
 const auth=useSelector(state => state.auth);
 const dispatch= useDispatch();
     const logout =() =>{
@@ -29,9 +38,12 @@ const dispatch= useDispatch();
         
     }
     return (
-        <>
-            <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" >
+        <div style={{height:"50px"}}>
+            <Navbar style={{ zIndex:2}} collapseOnSelect expand="md" bg="dark" variant="dark" >
                 <Container fluid>
+                    <Nav className="mr-auto">
+                        <span onClick={ToggleSideBar} className="nav-link"><FaBars/></span>
+                    </Nav>
                     <Navbar.Brand href="/">Admin Dashboard</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
@@ -39,7 +51,7 @@ const dispatch= useDispatch();
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-        </>
+        </div>
     );
     
 }

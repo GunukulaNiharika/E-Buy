@@ -1,5 +1,8 @@
 import React from 'react'
-import { Jumbotron } from 'react-bootstrap';
+// import SideBar from '../Components/SideBar';
+// import { Col, Container, Row } from 'react-bootstrap';
+import Layout from '../Components/Layout/layout';
+
 
 /**
 * @author
@@ -8,9 +11,15 @@ import { Jumbotron } from 'react-bootstrap';
 
 const Home = (props) => {
   return(
-    <Jumbotron className="text-center" >
-      Welcome to Admin Dashboard
-    </Jumbotron>
+    // <Container>
+    //   <Row>
+    //     <Col md={2}><SideBar/></Col>
+    //     <Col md={10}></Col>
+           
+    //    </Row>
+    // </Container>
+    <Layout sidebar/>
+
    )
 
  }
